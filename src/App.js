@@ -1,15 +1,18 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { usePosition } from "use-position";
 import WeatherContent from "./Components/WeatherContent";
-
+//https://api.openweathermap.org/data/2.5/weather?q=Istanbul&appid=5feb1ccaefbf73a0af111024f9413deb
 function App() {
   const [weather, setWeather] = useState();
   const { latitude, longitude } = usePosition();
+
+  //kullanıcıdan enlem ve boylam bilgisine göre hava durumu bilgisi alan fonksiyon
   const getWeather = async (lat, lon) => {
-    const apiKey = process.env.REACT_APP_API_KEY;
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
     const lang = navigator.language.split("-")[0];
+
     try {
       const { data } = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=${lang}&units=metric`
