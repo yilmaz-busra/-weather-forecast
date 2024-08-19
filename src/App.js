@@ -3,13 +3,14 @@ import "./App.css";
 import axios from "axios";
 import { usePosition } from "use-position";
 import WeatherContent from "./Components/WeatherContent";
-//https://api.openweathermap.org/data/2.5/weather?q=Istanbul&appid=5feb1ccaefbf73a0af111024f9413deb
+
 function App() {
   const [weather, setWeather] = useState();
+  const [city, setCity] = useState(""); // Şehir adını tutmak için state
   const { latitude, longitude } = usePosition();
 
-  //kullanıcıdan enlem ve boylam bilgisine göre hava durumu bilgisi alan fonksiyon
-  const getWeather = async (lat, lon) => {
+  // Kullanıcıdan enlem ve boylam bilgisine göre hava durumu bilgisi alan fonksiyon
+  const getWeatherByCoords = async (lat, lon) => {
     const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
     const lang = navigator.language.split("-")[0];
 
@@ -19,14 +20,38 @@ function App() {
       );
       setWeather(data);
     } catch (error) {
-      alert("Veri alınırken Hata Oluştu!");
+      alert("Veri alınırken hata oluştu!");
+    }
+  };
+
+  // Kullanıcının girdiği şehir adına göre hava durumu bilgisi alan fonksiyon
+  const getWeatherByCity = async (city) => {
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
+    const lang = navigator.language.split("-")[0];
+
+    try {
+      const { data } = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=${lang}&units=metric`
+      );
+      setWeather(data);
+    } catch (error) {
+      alert("Veri alınırken hata oluştu!");
     }
   };
 
   useEffect(() => {
-    latitude && longitude && getWeather(latitude, longitude);
+    latitude && longitude && getWeatherByCoords(latitude, longitude);
   }, [latitude, longitude]);
-  console.log(latitude, longitude, weather);
+
+  const handleInputChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  const handleSearch = () => {
+    if (city) {
+      getWeatherByCity(city);
+    }
+  };
 
   return (
     <div className="App">
@@ -36,6 +61,15 @@ function App() {
       </video>
       <div className="content">
         <h1>Hava Durumu Uygulaması</h1>
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Şehir adı girin..."
+            value={city}
+            onChange={handleInputChange}
+          />
+          <button onClick={handleSearch}>Hava Durumunu Getir</button>
+        </div>
         <WeatherContent weather={weather} />
       </div>
     </div>
