@@ -23,6 +23,7 @@ function App() {
     latitude && longitude && getWeather(latitude, longitude);
   }, [latitude, longitude]);
   console.log(latitude, longitude, weather);
+
   return (
     <div className="App">
       <video className="bg-video" autoPlay loop muted>
@@ -30,6 +31,7 @@ function App() {
         Your browser does not support the video tag.
       </video>
       <div className="content">
+        {/* Diğer içerikler buraya gelecek */}
         <h1>Hava Durumu Uygulaması</h1>
         {/* HavaDurumu bileşeniniz burada yer alabilir */}
       </div>
