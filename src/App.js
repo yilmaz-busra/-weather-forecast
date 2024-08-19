@@ -2,6 +2,7 @@ import "./App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { usePosition } from "use-position";
+import WeatherContent from "./Components/WeatherContent";
 
 function App() {
   const [weather, setWeather] = useState();
@@ -31,9 +32,8 @@ function App() {
         Your browser does not support the video tag.
       </video>
       <div className="content">
-        {/* Diğer içerikler buraya gelecek */}
         <h1>Hava Durumu Uygulaması</h1>
-        {/* HavaDurumu bileşeniniz burada yer alabilir */}
+        <WeatherContent weather={weather} />
       </div>
     </div>
   );
