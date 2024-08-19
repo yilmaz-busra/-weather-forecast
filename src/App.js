@@ -1,13 +1,44 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
-import { usePosition } from "use-position";
+
 import WeatherContent from "./Components/WeatherContent";
 
 function App() {
   const [weather, setWeather] = useState();
   const [city, setCity] = useState(""); // Şehir adını tutmak için state
-  const { latitude, longitude } = usePosition();
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
+
+  const getUserLocation = () => {
+    // if geolocation is supported by the users browser
+    if (navigator.geolocation) {
+      // get the current users location
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // save the geolocation coordinates in two variables
+          const { latitude, longitude } = position.coords;
+          // update the value of userlocation variable
+          setLatitude(latitude);
+          setLongitude(longitude);
+          console.log("latitude", latitude);
+        },
+
+        // if there was an error getting the users location
+        (error) => {
+          console.error("Error getting user location:", error);
+        }
+      );
+    }
+    // if geolocation is not supported by the users browser
+    else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
+
+  useEffect(() => {
+    getUserLocation();
+  }, []);
 
   // Kullanıcıdan enlem ve boylam bilgisine göre hava durumu bilgisi alan fonksiyon
   const getWeatherByCoords = async (lat, lon) => {
