@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <video className="bg-video" autoPlay loop muted>
+        <source src={process.env.PUBLIC_URL + "/hava.mp4"} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="content">
+        {/* Diğer içerikler buraya gelecek */}
+        <h1>Hava Durumu Uygulaması</h1>
+        {/* HavaDurumu bileşeniniz burada yer alabilir */}
+      </div>
     </div>
   );
 }
