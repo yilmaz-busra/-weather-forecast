@@ -18,11 +18,5 @@
   z-index: 1; /* İçeriğin video üzerinde olmasını sağlar */
   color: white; /* İçeriğin görünür olması için beyaz yapalım */
   text-align: center;
-  padding-top: 20%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  padding-top: 200px;
 }
